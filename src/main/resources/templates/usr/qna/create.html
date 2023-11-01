@@ -1,23 +1,30 @@
-<html layout:decorate="~{usr/common/layout}">
+<html th:layout="~{usr/common/layout}">
 
 <head>
-    <title th:text="|QnA 게시판|"></title>
+    <title th:text="|QnA 게시판 - 수정|"></title>
 </head>
 
 <body>
 
-<div class="flex-1 flex items-center justify-center" layout:fragment="content">
+<div class="flex-1 flex items-center justify-center" th:fragment="content">
     <div class="container w-full px-4">
         <h1 class="mb-4">
             <i class="fa-solid fa-cubes"></i>
-            <span th:text="|Question 글쓰기|"></span>
+            <span th:text="|Question 글 작성하기|"></span>
         </h1>
 
         <div class="flex flex-col gap-6">
             <div class="card-body">
 
                 <form th:action="@{/usr/qna/q/create}" method="post">
+                    <input type="hidden" th:value="1" name="lectureId" />
+                    <input type="hidden" th:value="1" name="curriculumId" />
+                    <input type="hidden" th:value="1" name="memberId" />
 
+                    <textarea class="textarea textarea-bordered w-full" name="subject" placeholder="제목을 입력하세요."></textarea>
+                    <textarea class="textarea textarea-bordered w-full" name="content" placeholder="내용을 입력하세요."></textarea>
+
+                    <button type="submit" class="btn btn-primary">작성</button>
                 </form>
 
             </div>

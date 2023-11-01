@@ -27,15 +27,15 @@ public class QuestionService {
         return question.get();
     }
 
-    public void create(String subject, String content, Long memberId) {
+    public void create(String subject, String content, Long memberId, int lectureId, int curriculumId) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new RuntimeException("회원을 찾을 수 없습니다."));
 
         Question q = new Question();
         q.setSubject(subject);
         q.setContent(content);
-        q.setLectureId(1);        // 고정된 값 1로 설정
-        q.setCurriculumId(1);     // 고정된 값 1로 설정
+        q.setLectureId(lectureId);
+        q.setCurriculumId(curriculumId);
         q.setMember(member);
 
         this.questionRepository.save(q);

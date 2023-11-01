@@ -39,12 +39,12 @@ public class QuestionController {
     public String create(
             @RequestParam("subject") String subject,
             @RequestParam("content") String content,
-            @RequestParam("memberId") Long memberId) {
+            @RequestParam("memberId") Long memberId,
+            @RequestParam("lectureId") int lectureId,
+            @RequestParam("curriculumId") int curriculumId) {
 
-        // 질문을 생성하는 서비스 호출
-        questionService.create(subject, content, memberId);
+        questionService.create(subject, content, memberId, lectureId, curriculumId);
 
-        // 생성 후 질문 목록 페이지로 리다이렉트
         return "redirect:/usr/qna/q/list";
     }
 }
