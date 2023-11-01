@@ -16,6 +16,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder  // Lombok: Builder 패턴 구현
 @ToString(callSuper = true)  // Lombok: toString 메서드 오버라이드
 public class Answer extends BaseEntity {
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Question question;  // 해당 답변과 관련된 질문
 

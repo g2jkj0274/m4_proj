@@ -16,6 +16,7 @@ import java.util.List;
 @SuperBuilder  // Lombok: Builder 패턴 구현
 @ToString(callSuper = true)  // Lombok: toString 메서드 오버라이드
 public class Question extends BaseEntity {
+
     @Column(nullable = false)
     private int lectureId;  // 강의 ID
 
