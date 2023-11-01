@@ -625,13 +625,51 @@
                     <div th:text="${article.author.nickname}"></div>
                 </div>
 
-<!--                <div class="form-control">-->
-<!--                    <label class="label">-->
-<!--                        <span class="label-text">본문</span>-->
-<!--                    </label>-->
-<!--                    <a class="link" target="_blank" th:href="|/usr/post/listByKeyword/${book.postKeyword.id}|"-->
-<!--                       th:text="|#${book.postKeyword.content}(${book.postKeyword.total})|"></a>-->
-<!--                </div>-->
+                <!--JHG ADD - view-->
+                <div th:if="${board.name} == '자유'">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">댓글</span>
+                        </label>
+                        <div class="flex items-center">
+                            <i class="fa-regular fa-comment mr-2"></i>
+                            <div th:text="${article.getComments().size()}"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${board.name} == '자유'">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">좋아요</span>
+                        </label>
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-thumbs-up mr-2"></i>
+                            <div th:text="${article.voteCount}"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${board.name} == '자유'">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">조회수</span>
+                        </label>
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-eye mr-2"></i>
+                            <div th:text="${article.viewCount}"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--JHG ADD - view-->
+
+                <!--                <div class="form-control">-->
+                <!--                    <label class="label">-->
+                <!--                        <span class="label-text">본문</span>-->
+                <!--                    </label>-->
+                <!--                    <a class="link" target="_blank" th:href="|/usr/post/listByKeyword/${book.postKeyword.id}|"-->
+                <!--                       th:text="|#${book.postKeyword.content}(${book.postKeyword.total})|"></a>-->
+                <!--                </div>-->
 
                 <div class="form-control col-span-full">
                     <label class="label">
@@ -651,61 +689,5 @@
         </div>
     </div>
 </th:block>
-
-<th:block th:fragment="lectureListItemCard(lecture)">
-    <div class="card bg-base-100 shadow-xl">
-        <div class="card-body">
-
-            <div class="detail grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-3">
-                <div class="form-control">
-                    <label class="label">
-                        <span class="label-text">게시물번호</span>
-                    </label>
-                    <div th:text="${lecture.id}"></div>
-                </div>
-
-                <div class="form-control">
-                    <label class="label">
-                        <span class="label-text">작성일</span>
-                    </label>
-                    <div th:text="${#temporals.format(lecture.createDate, 'yy.MM.dd')}"></div>
-                </div>
-
-                <div class="form-control">
-                    <label class="label">
-                        <span class="label-text">작성자</span>
-                    </label>
-                    <div th:text="${lecture.producer.producerName}"></div>
-                </div>
-
-                <div class="form-control">
-                    <label class="label">
-                        <span class="label-text">공개</span>
-                    </label>
-                    <div th:text="${lecture.publicHanName}"></div>
-                </div>
-
-                <div class="form-control col-span-full">
-                    <label class="label">
-                        <span class="label-text">제목</span>
-                    </label>
-                    <a class="link truncate" th:href="|/usr/lecture/detail/${lecture.id}|"
-                       th:text="${lecture.subject}"></a>
-                </div>
-
-                <div class="form-control col-span-full">
-                    <label class="label">
-                        <span class="label-text">태그</span>
-                    </label>
-                    <div th:utext="${lecture.getTagLinks('<a class=`link` href=`%s`>#%s</a>', '/usr/lecture/listByTag/%s')}"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</th:block>
-
-
-
-
 </body>
 </html>

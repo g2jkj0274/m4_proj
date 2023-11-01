@@ -3,19 +3,18 @@ package com.yk.Motivation.domain.article.entity;
 
 import com.yk.Motivation.base.jpa.baseEntity.BaseEntity;
 import com.yk.Motivation.domain.board.entity.Board;
+import com.yk.Motivation.domain.comment.entity.Comment;
 import com.yk.Motivation.domain.document.standard.DocumentHavingTags;
 import com.yk.Motivation.domain.document.standard.DocumentTag;
-import com.yk.Motivation.standard.util.Ut;
+import com.yk.Motivation.domain.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import com.yk.Motivation.domain.member.entity.Member;
 
-
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static lombok.AccessLevel.PROTECTED;
 
@@ -67,4 +66,14 @@ public class Article extends BaseEntity implements DocumentHavingTags {
 
         return tag;
     }
+
+    /*JHG ADD*/
+    // 추천 수
+    private int voteCount = 0; // 초기 값 0
+
+    // 조회 수
+    private int viewCount = 0;
+
+    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
 }

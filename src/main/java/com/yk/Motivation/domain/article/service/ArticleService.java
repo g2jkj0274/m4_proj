@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -137,5 +136,10 @@ public class ArticleService {
 
     public Page<Article> findByTag(String tagContent, Pageable pageable) {
         return articleRepository.findByArticleTags_content(tagContent, pageable);
+    }
+
+    @Transactional
+    public void save(Article article) {
+        articleRepository.save(article);
     }
 }

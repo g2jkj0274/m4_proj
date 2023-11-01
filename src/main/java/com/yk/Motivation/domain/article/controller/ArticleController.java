@@ -7,6 +7,8 @@ import com.yk.Motivation.domain.article.entity.Article;
 import com.yk.Motivation.domain.article.service.ArticleService;
 import com.yk.Motivation.domain.board.entity.Board;
 import com.yk.Motivation.domain.board.service.BoardService;
+import com.yk.Motivation.domain.comment.entity.Comment;
+import com.yk.Motivation.domain.comment.service.CommentService;
 import com.yk.Motivation.domain.genFile.entity.GenFile;
 import com.yk.Motivation.standard.util.Ut;
 import jakarta.validation.Valid;
@@ -40,6 +42,8 @@ public class ArticleController {
     private final BoardService boardService;
     private final ArticleService articleService;
     private final Rq rq;
+    // 필드 선언 부분에 CommentService 추가
+    private final CommentService commentService;
 
     @GetMapping("/{boardCode}/list")
     public String showList(
@@ -197,11 +201,19 @@ public class ArticleController {
         Board board = boardService.findByCode(boardCode).get();
         Article article = articleService.findById(id).get();
 
+        // 조회수 증가
+        article.setViewCount(article.getViewCount() + 1);
+        articleService.save(article); // 증가된 조회수를 저장
+
+        // 댓글 리스트 가져오기
+        List<Comment> comments = commentService.findByArticleId(id);
+
         Map<String, GenFile> filesMap = articleService.findGenFilesMapKeyByFileNo(article, "common", "attachment");
 
         model.addAttribute("board", board);
         model.addAttribute("article", article);
         model.addAttribute("filesMap", filesMap);
+        model.addAttribute("comments", comments); // 댓글 리스트를 모델에 추가
 
         return "usr/article/detail";
     }
