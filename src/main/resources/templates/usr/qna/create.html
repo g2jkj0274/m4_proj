@@ -1,12 +1,12 @@
-<html th:layout="~{usr/common/layout}">
+<html layout:decorate="~{usr/common/layout}">
 
 <head>
-    <title th:text="|QnA 게시판 - 수정|"></title>
+    <title th:text="|QnA 게시판 - 작성|"></title>
 </head>
 
 <body>
 
-<div class="flex-1 flex items-center justify-center" th:fragment="content">
+<div class="flex-1 flex items-center justify-center" layout:fragment="content">
     <div class="container w-full px-4">
         <h1 class="mb-4">
             <i class="fa-solid fa-cubes"></i>
@@ -16,6 +16,7 @@
         <div class="flex flex-col gap-6">
             <div class="card-body">
 
+                <!--backup post-->
                 <form th:action="@{/usr/qna/q/create}" method="post">
                     <input type="hidden" th:value="1" name="lectureId" />
                     <input type="hidden" th:value="1" name="curriculumId" />
