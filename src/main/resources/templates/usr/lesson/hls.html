@@ -58,13 +58,27 @@
 
     <script>
         function showQnA() {
-            document.getElementById('qna-content').style.display = 'block';
-            document.getElementById('curriculum-content').style.display = 'none';
+            var qnaContent = document.getElementById('qna-content');
+            var curriculumContent = document.getElementById('curriculum-content');
+
+            if (qnaContent.style.display === 'none' || qnaContent.style.display === '') {
+                qnaContent.style.display = 'block';
+                curriculumContent.style.display = 'none';
+            } else {
+                qnaContent.style.display = 'none';
+            }
         }
 
         function showCurriculum() {
-            document.getElementById('curriculum-content').style.display = 'block';
-            document.getElementById('qna-content').style.display = 'none';
+            var qnaContent = document.getElementById('qna-content');
+            var curriculumContent = document.getElementById('curriculum-content');
+
+            if (curriculumContent.style.display === 'none' || curriculumContent.style.display === '') {
+                curriculumContent.style.display = 'block';
+                qnaContent.style.display = 'none';
+            } else {
+                curriculumContent.style.display = 'none';
+            }
         }
 
         function hideQnA() {
