@@ -40,6 +40,33 @@
 
     </script>
 
+    <!--JHG ADD - sidebar-->
+    <div id="sidebar-content">
+        <button onclick="showQnA()">QnA</button>
+        <button onclick="showCurriculum()">커리큘럼</button>
+
+        <div id="qna-content" style="display: none;">
+            <p>여기는 QnA 내용입니다.</p>
+        </div>
+
+        <div id="curriculum-content" style="display: none;">
+            <p>여기는 커리큘럼 내용입니다.</p>
+        </div>
+    </div>
+
+    <script>
+        function showQnA() {
+            document.getElementById('qna-content').style.display = 'block';
+            document.getElementById('curriculum-content').style.display = 'none';
+        }
+
+        function showCurriculum() {
+            document.getElementById('curriculum-content').style.display = 'block';
+            document.getElementById('qna-content').style.display = 'none';
+        }
+    </script>
+    <!--JHG ADD - sidebar-->
+
 </div>
 
 </body>
