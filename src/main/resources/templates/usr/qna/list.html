@@ -15,8 +15,8 @@
 
         <div class="card bg-base-100 shadow-xl">
             <div class="card-body">
-
                 <div class="detail grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-3">
+
                     <table>
                         <thead>
                         <tr>
@@ -36,7 +36,9 @@
                         </tr>
                         </tbody>
                     </table>
+                    
                 </div>
+
                 <div th:if="${@rq.login}">
                     <a th:href="@{/usr/qna/q/create}" class="btn btn-primary">질문 등록하기</a>
                 </div>

@@ -34,17 +34,4 @@ public class QuestionController {
     public String questionCreate() {
         return "usr/qna/create";
     }
-
-    @PostMapping("/create")
-    public String create(
-            @RequestParam("subject") String subject,
-            @RequestParam("content") String content,
-            @RequestParam("memberId") Long memberId,
-            @RequestParam("lectureId") int lectureId,
-            @RequestParam("curriculumId") int curriculumId) {
-
-        questionService.create(subject, content, memberId, lectureId, curriculumId);
-
-        return "redirect:/usr/qna/q/list";
-    }
 }

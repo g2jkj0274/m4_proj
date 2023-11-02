@@ -17,7 +17,6 @@ import java.util.List;
 @ToString(callSuper = true)  // Lombok: toString 메서드 오버라이드
 public class Question extends BaseEntity {
 
-    @Column(nullable = false)
     private int lectureId;  // 강의 ID
 
     private int curriculumId;  // 커리큘럼 ID
@@ -25,8 +24,14 @@ public class Question extends BaseEntity {
     @Column(nullable = false, length = 255)
     private String subject;  // 질문 제목
 
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String content;  // 질문 내용
+    @Column(columnDefinition = "TEXT")
+    private String content;
+
+    @Column(columnDefinition = "TEXT")
+    private String body;
+
+    @Column(columnDefinition = "TEXT")
+    private String bodyHtml;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
