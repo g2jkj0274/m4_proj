@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -19,9 +18,8 @@ public class QuestionService {
     }
 
     public Question getQuestion(Integer id) {
-        Optional<Question> question = this.questionRepository.findById(id);
-        question.isPresent();
-        return question.get();
+        return this.questionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Question with id " + id + " not found"));
     }
 
     public Question create(Question question) {

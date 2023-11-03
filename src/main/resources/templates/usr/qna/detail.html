@@ -6,7 +6,9 @@
 
 <body>
 
-<div class="flex-1 flex items-center justify-center" layout:fragment="body">
+<div class="flex-1 flex items-center justify-center" layout:fragment="content">
+    <th:block th:replace="common/fragments :: toastuiEidtorLib"></th:block>
+
     <div class="container w-full px-4"> <!-- 컨테이너 시작 -->
         <h1 class="mb-4">
             <i class="fa-regular fa-file-word"></i> <!-- 아이콘 -->
@@ -43,6 +45,12 @@
                              style="overflow-wrap: break-word;"
                              th:utext="${question.body}">
                         </div>
+                    </div>
+                </div>
+
+                <div class="mt-6"> <!-- 버튼 그룹 시작 -->
+                    <div class="text-center"> <!-- 중앙 정렬 -->
+                        <a class="btn btn-link" th:href="|/usr/qna/q/list|">목록</a>
                     </div>
                 </div>
 
