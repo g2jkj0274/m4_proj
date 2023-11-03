@@ -34,4 +34,12 @@ public class QuestionController {
     public String questionCreate() {
         return "usr/qna/create";
     }
+
+    // 비디오 페이지용 리스트 뷰
+    @GetMapping("/videoInList")
+    public String videoInList(Model model) {
+        List<Question> questionList = this.questionService.getList();
+        model.addAttribute("questionList", questionList);
+        return "usr/qna/videoInList";
+    }
 }

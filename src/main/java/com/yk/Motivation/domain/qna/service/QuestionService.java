@@ -1,6 +1,5 @@
 package com.yk.Motivation.domain.qna.service;
 
-import com.yk.Motivation.domain.member.repository.MemberRepository;
 import com.yk.Motivation.domain.qna.entity.Question;
 import com.yk.Motivation.domain.qna.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,6 @@ import java.util.Optional;
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
-    private final MemberRepository memberRepository;
 
     public List<Question> getList() {
         return this.questionRepository.findAll();

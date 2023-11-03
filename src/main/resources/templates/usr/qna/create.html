@@ -12,7 +12,7 @@
     <div class="container w-full px-4">
         <h1 class="mb-4">
             <i class="fa-solid fa-cubes"></i>
-            <span th:text="|Question 글쓰기|"></span>
+            <span th:text="|Question create|"></span>
         </h1>
 
         <form class="flex flex-col gap-6" enctype="multipart/form-data" method="POST"
@@ -20,6 +20,11 @@
               th:action>
             <input type="hidden" name="body">
             <input type="hidden" name="bodyHtml">
+
+            <input type="hidden" th:value="1" name="lectureId" />
+            <input type="hidden" th:value="1" name="curriculumId" />
+            <input type="hidden" th:value="1" name="memberId" />
+
             <div class="form-control">
                 <label class="label">
                     <span class="label-text">제목</span>
@@ -32,7 +37,6 @@
                 <label class="label">
                     <span class="label-text">내용</span>
                 </label>
-
                 <div class="toast-ui-editor" height="calc(100vh - 200px)" placeholder="내용"></div>
             </div>
 

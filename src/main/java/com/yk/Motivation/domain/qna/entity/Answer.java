@@ -20,6 +20,9 @@ public class Answer extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Question question;  // 해당 답변과 관련된 질문
 
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String content;  // 답변 내용
+    @Column(columnDefinition = "TEXT")
+    private String body;
+
+    @Column(columnDefinition = "TEXT")
+    private String bodyHtml;
 }

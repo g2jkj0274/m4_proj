@@ -25,9 +25,6 @@ public class Question extends BaseEntity {
     private String subject;  // 질문 제목
 
     @Column(columnDefinition = "TEXT")
-    private String content;
-
-    @Column(columnDefinition = "TEXT")
     private String body;
 
     @Column(columnDefinition = "TEXT")
