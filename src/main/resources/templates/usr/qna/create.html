@@ -15,22 +15,16 @@
             <span th:text="|Question create|"></span>
         </h1>
 
-        <form class="flex flex-col gap-6" enctype="multipart/form-data" method="POST"
-              onsubmit="submitWriteForm(this); return false;"
-              th:action>
+        <form class="flex flex-col gap-6" method="POST" onsubmit="submitQuestionForm(this); return false;" th:action>
             <input type="hidden" name="body">
             <input type="hidden" name="bodyHtml">
-
-            <input type="hidden" th:value="1" name="lectureId" />
-            <input type="hidden" th:value="1" name="curriculumId" />
-            <input type="hidden" th:value="1" name="memberId" />
+            <input type="hidden" name="member" value="1">
 
             <div class="form-control">
                 <label class="label">
                     <span class="label-text">제목</span>
                 </label>
-                <input class="input input-bordered" maxlength="100"
-                       name="subject" placeholder="제목" type="text" autofocus>
+                <input class="input input-bordered" maxlength="100" name="subject" placeholder="제목" type="text" autofocus>
             </div>
 
             <div class="form-control">
@@ -43,7 +37,7 @@
             <div class="flex flex-col gap-2">
                 <button class="btn btn-block btn-primary gap-1">
                     <i class="fa-solid fa-pen"></i>
-                    <span>글쓰기</span>
+                    <span>질문하기</span>
                 </button>
 
                 <div class="text-center">
@@ -53,11 +47,7 @@
         </form>
 
         <script>
-            let submitWriteFormDone = false;
-
-            function submitWriteForm(form) {
-                if (submitWriteFormDone) return;
-
+            function submitQuestionForm(form) {
                 form.subject.value = form.subject.value.trim();
 
                 if (form.subject.value.length == 0) {
@@ -87,7 +77,6 @@
                 }
 
                 form.submit();
-                submitWriteFormDone = true;
             }
         </script>
     </div>

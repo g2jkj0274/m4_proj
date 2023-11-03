@@ -6,7 +6,7 @@
 
 <body>
 
-<div class="flex-1 flex items-center justify-center" layout:fragment="content">
+<div class="flex-1 flex items-center justify-center" layout:fragment="body">
     <div class="container w-full px-4"> <!-- 컨테이너 시작 -->
         <h1 class="mb-4">
             <i class="fa-regular fa-file-word"></i> <!-- 아이콘 -->
@@ -39,9 +39,9 @@
                         <label class="label">
                             <span class="label-text">내용</span>
                         </label>
-                        <div class="toastui-editor-contents"
+                        <div class="toastui-editor-bodys"
                              style="overflow-wrap: break-word;"
-                             th:utext="${question.content}">
+                             th:utext="${question.body}">
                         </div>
                     </div>
                 </div>
@@ -49,12 +49,12 @@
                 <h5 th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
                 <div>
                     <ul>
-                        <li th:each="answer : ${question.answerList}" th:text="${answer.content}"></li>
+                        <li th:each="answer : ${question.answerList}" th:text="${answer.body}"></li>
                     </ul>
                 </div>
                 <div th:if="${@rq.login}">
                     <form th:action="@{|/usr/qna/a/create/${question.id}|}" method="post">
-                        <textarea class="textarea textarea-bordered w-full" name="content" placeholder="답변을 입력하세요."></textarea>
+                        <textarea class="textarea textarea-bordered w-full" name="body" placeholder="답변을 입력하세요."></textarea>
                         <button type="submit" class="btn btn-primary mt-2">답변 등록</button>
                     </form>
                 </div>

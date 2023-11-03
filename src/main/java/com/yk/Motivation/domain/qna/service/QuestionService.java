@@ -23,4 +23,8 @@ public class QuestionService {
         question.isPresent();
         return question.get();
     }
+
+    public Question create(Question question) {
+        return this.questionRepository.save(question);
+    }
 }

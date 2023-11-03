@@ -32,7 +32,7 @@ public class Question extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private Member member;  // 질문을 작성한 사용자
+    private Member member;
 
     @Column(nullable = false)
     private boolean answerStatus = false;  // 답변 상태. 기본값은 false(미등록).
