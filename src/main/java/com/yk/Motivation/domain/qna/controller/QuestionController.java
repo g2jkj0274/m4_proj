@@ -47,4 +47,12 @@ public class QuestionController {
         questionService.create(question);  // 데이터베이스에 저장하는 로직
         return "redirect:/usr/qna/q/list"; // 질문 목록 페이지로 리디렉션
     }
+
+    // 비디오 페이지 안의 QnA List
+    @GetMapping("/videoInList")
+    public String videoInList(Model model) {
+        List<Question> questionList = this.questionService.getList();
+        model.addAttribute("questionList", questionList);
+        return "usr/qna/videoInList";
+    }
 }
