@@ -25,4 +25,12 @@ public class AnswerController {
         this.answerService.create(question, content);
         return String.format("redirect:/usr/qna/q/detail/%s", id);
     }
+
+    // video in qna comment create
+    @PostMapping("/videoInCreateAnswer/{id}")
+    public String videoInCreateAnswer(Model model, @PathVariable("id") Integer id, @RequestParam String content) {
+        Question question = this.questionService.getQuestion(id);
+        this.answerService.create(question, content);
+        return String.format("redirect:/usr/qna/q/videoInDetail/%s", id);
+    }
 }

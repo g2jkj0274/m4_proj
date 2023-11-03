@@ -28,7 +28,7 @@
                         <tbody>
                         <tr th:each="question : ${questionList}">
                             <td>
-                                <a th:href="@{|/usr/qna/q/detail/${question.id}|}" th:text="${question.subject}"></a>
+                                <a th:href="@{|/usr/qna/q/videoInDetail/${question.id}|}" th:text="${question.subject}"></a>
                             </td>
                             <td>
                                 <th:block th:if="${#lists.size(question.answerList) == 0}">대기중...</th:block>
@@ -45,7 +45,7 @@
                 </div>
 
                 <div th:if="${@rq.login}">
-                    <a th:href="@{/usr/qna/q/create}" class="btn btn-primary">질문 등록하기</a>
+                    <a th:href="@{/usr/qna/q/videoInCreate}" class="btn btn-primary">질문 등록하기</a>
                 </div>
 
             </div>

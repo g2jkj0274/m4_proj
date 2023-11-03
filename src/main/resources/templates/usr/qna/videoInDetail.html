@@ -69,7 +69,7 @@
                     </ul>
                 </div>
                 <div th:if="${@rq.login}">
-                    <form th:action="@{|/usr/qna/a/create/${question.id}|}" method="post">
+                    <form th:action="@{|/usr/qna/a/videoInCreateAnswer/${question.id}|}" method="post">
                         <textarea class="textarea textarea-bordered w-full" name="content" placeholder="답변을 입력하세요."></textarea>
                         <button type="submit" class="btn btn-primary mt-2">답변 등록</button>
                     </form>
