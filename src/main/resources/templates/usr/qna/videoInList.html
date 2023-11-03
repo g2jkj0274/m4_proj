@@ -22,6 +22,7 @@
                         <tr>
                             <th style="text-align: left">제목</th>
                             <th style="text-align: left">상태</th>
+                            <th style="text-align: left">기록</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -30,8 +31,12 @@
                                 <a th:href="@{|/usr/qna/q/detail/${question.id}|}" th:text="${question.subject}"></a>
                             </td>
                             <td>
-                                <th:block th:if="${!question.answerStatus}">대기중...</th:block>
-                                <th:block th:if="${question.answerStatus}">답변완료</th:block>
+                                <th:block th:if="${#lists.size(question.answerList) == 0}">대기중...</th:block>
+                                <th:block th:if="${#lists.size(question.answerList) > 0}">답변 완료</th:block>
+
+                            </td>
+                            <td>
+                                <h5 th:text="|${#lists.size(question.answerList)}개의 기록이 있습니다.|"></h5>
                             </td>
                         </tr>
                         </tbody>

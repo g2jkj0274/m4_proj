@@ -19,7 +19,7 @@ public class Question extends BaseEntity {
 
     private int lectureId;  // 강의 ID
 
-    private int curriculumId;  // 커리큘럼 ID
+    private int lessonId;  // 레슨 ID - 인덱스 걸어서 검색 속도 향상 시키기, 젠파일에 인덱스 거는법 있음
 
     @Column(nullable = false, length = 255)
     private String subject;  // 질문 제목
@@ -34,10 +34,6 @@ public class Question extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @Column(nullable = false)
-    private boolean answerStatus = false;  // 답변 상태. 기본값은 false(미등록).
-
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Answer> answerList;
-
 }
