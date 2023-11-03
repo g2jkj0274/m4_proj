@@ -61,15 +61,16 @@
                     </div>
                 </div>
 
+                <!--Comment-->
                 <h5 th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
                 <div>
                     <ul>
-                        <li th:each="answer : ${question.answerList}" th:text="${answer.body}"></li>
+                        <li th:each="answer : ${question.answerList}" th:text="${answer.content}"></li>
                     </ul>
                 </div>
                 <div th:if="${@rq.login}">
                     <form th:action="@{|/usr/qna/a/create/${question.id}|}" method="post">
-                        <textarea class="textarea textarea-bordered w-full" name="body" placeholder="답변을 입력하세요."></textarea>
+                        <textarea class="textarea textarea-bordered w-full" name="content" placeholder="답변을 입력하세요."></textarea>
                         <button type="submit" class="btn btn-primary mt-2">답변 등록</button>
                     </form>
                 </div>
