@@ -46,6 +46,15 @@
                              th:utext="${question.body}">
                         </div>
                     </div>
+                    <div class="form-control col-span-full">
+                        <label class="label">
+                            <span class="label-text">내용테스트</span>
+                        </label>
+                        <div class="toastui-editor-bodys"
+                             style="overflow-wrap: break-word;"
+                             th:utext="${question.bodyHtml}">
+                        </div>
+                    </div>
                 </div>
 
                 <div class="mt-6"> <!-- 버튼 그룹 시작 -->
