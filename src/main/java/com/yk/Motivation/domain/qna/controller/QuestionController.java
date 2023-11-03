@@ -38,7 +38,7 @@ public class QuestionController {
     // 질문 작성 페이지 뷰
     @GetMapping("/create")
     public String showCreate(Model model) {
-        return "usr/qna/create"; // HTML 파일명을 여기에 맞춰주세요
+        return "usr/qna/create";
     }
 
     // 질문 작성 데이터 처리
@@ -54,5 +54,20 @@ public class QuestionController {
         List<Question> questionList = this.questionService.getList();
         model.addAttribute("questionList", questionList);
         return "usr/qna/videoInList";
+    }
+    @GetMapping(value = "/videoInDetail/{id}")
+    public String videoInDetail(Model model, @PathVariable("id") Integer id) {
+        Question question = this.questionService.getQuestion(id);
+        model.addAttribute("question", question);
+        return "usr/qna/videoInDetail";
+    }
+    @GetMapping("/videoInCreate")
+    public String videoInCreate(Model model) {
+        return "usr/qna/videoInCreate";
+    }
+    @PostMapping("/videoInCreate")
+    public String videoInHandleCreate(Question question) {
+        questionService.create(question);  // 데이터베이스에 저장하는 로직
+        return "redirect:/usr/qna/q/videoInList";
     }
 }
