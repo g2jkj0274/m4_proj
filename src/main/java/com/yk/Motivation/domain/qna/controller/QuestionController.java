@@ -1,6 +1,9 @@
 package com.yk.Motivation.domain.qna.controller;
 
 import com.yk.Motivation.base.rq.Rq;
+import com.yk.Motivation.domain.lecture.service.LectureService;
+import com.yk.Motivation.domain.lesson.service.LessonService;
+import com.yk.Motivation.domain.member.entity.Member;
 import com.yk.Motivation.domain.qna.entity.Question;
 import com.yk.Motivation.domain.qna.service.QuestionService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +23,8 @@ public class QuestionController {
 
     private final QuestionService questionService;
     private final Rq rq;
+    private final LectureService lectureService;
+    private final LessonService lessonService;
 
     @GetMapping("/list")
     public String list(Model model) {
@@ -55,18 +60,34 @@ public class QuestionController {
         model.addAttribute("questionList", questionList);
         return "usr/qna/videoInList";
     }
+
     @GetMapping(value = "/videoInDetail/{id}")
     public String videoInDetail(Model model, @PathVariable("id") Integer id) {
         Question question = this.questionService.getQuestion(id);
         model.addAttribute("question", question);
         return "usr/qna/videoInDetail";
     }
+
     @GetMapping("/videoInCreate")
     public String videoInCreate(Model model) {
         return "usr/qna/videoInCreate";
     }
+    /*
     @PostMapping("/videoInCreate")
     public String videoInHandleCreate(Question question) {
+        questionService.create(question);  // 데이터베이스에 저장하는 로직
+        return "redirect:/usr/qna/q/videoInList";
+    }
+    */
+    @PostMapping("/videoInCreate")
+    public String videoInHandleCreate(Question question) {
+        Member loginedMember = rq.getMember();
+
+        if(loginedMember == null) {
+            return "redirect:/login";
+        }
+
+        question.setMember(loginedMember); // 로그인된 멤버 정보를 Question 객체에 설정
         questionService.create(question);  // 데이터베이스에 저장하는 로직
         return "redirect:/usr/qna/q/videoInList";
     }

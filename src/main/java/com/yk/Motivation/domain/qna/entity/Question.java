@@ -1,6 +1,8 @@
 package com.yk.Motivation.domain.qna.entity;
 
 import com.yk.Motivation.base.jpa.baseEntity.BaseEntity;
+import com.yk.Motivation.domain.lecture.entity.Lecture;
+import com.yk.Motivation.domain.lesson.entity.Lesson;
 import com.yk.Motivation.domain.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,9 +19,11 @@ import java.util.List;
 @ToString(callSuper = true)  // Lombok: toString 메서드 오버라이드
 public class Question extends BaseEntity {
 
-    private int lectureId;  // 강의 ID
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Lecture lecture;  // 강의 ID
 
-    private int lessonId;  // 레슨 ID - 인덱스 걸어서 검색 속도 향상 시키기, 젠파일에 인덱스 거는법 있음
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Lesson lesson;  // 레슨 ID - 인덱스 걸어서 검색 속도 향상 시키기, 젠파일에 인덱스 거는법 있음
 
     @Column(nullable = false, length = 255)
     private String subject;  // 질문 제목
@@ -31,7 +35,6 @@ public class Question extends BaseEntity {
     private String bodyHtml;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
     private Member member;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
