@@ -45,7 +45,8 @@
                 </div>
 
                 <div th:if="${@rq.login}">
-                    <a th:href="@{/usr/qna/q/videoInCreate}" class="btn btn-primary">질문 등록하기</a>
+                    <!-- lectureId와 lessonId를 쿼리 파라미터로 추가 -->
+                    <a th:href="@{/usr/qna/q/videoInCreate(lectureId=${lectureId},lessonId=${lessonId})}" class="btn btn-primary">질문 등록하기 테스트</a>
                 </div>
 
             </div>

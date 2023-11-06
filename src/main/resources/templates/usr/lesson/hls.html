@@ -47,7 +47,7 @@
 
         <div id="qna-content" style="display: none; border: 1px solid red;">
             <p>여기는 QnA 내용입니다.</p>
-            <iframe src="/usr/qna/q/videoInList" width="600" height="400"></iframe>
+            <iframe th:src="'/usr/qna/q/videoInList/' + ${lessonId}" width="600" height="400"></iframe>
             <button onclick="hideQnA()" style="background-color: green">닫기</button>
         </div>
 
