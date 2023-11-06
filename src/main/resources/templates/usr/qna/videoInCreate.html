@@ -26,8 +26,8 @@
             <input type="hidden" name="body">
             <input type="hidden" name="bodyHtml">
 
-            <input type="hidden" name="lecture" th:value="${lectureId}">
-            <input type="hidden" name="lesson" th:value="${lessonId}">
+            <input type="hidden" name="lecture" th:value="${lectureId != null ? lectureId : 0}">
+            <input type="hidden" name="lesson" th:value="${lessonId != null ? lessonId : 0}">
 
             <div class="form-control">
                 <label class="label">

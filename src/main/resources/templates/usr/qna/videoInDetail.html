@@ -71,6 +71,7 @@
                 <div th:if="${@rq.login}">
                     <form th:action="@{|/usr/qna/a/videoInCreateAnswer/${question.id}|}" method="post">
                         <textarea class="textarea textarea-bordered w-full" name="content" placeholder="답변을 입력하세요."></textarea>
+                        <input type="hidden" name="lessonId" th:value="${lessonId != null ? lessonId : 0}" />
                         <button type="submit" class="btn btn-primary mt-2">답변 등록</button>
                     </form>
                 </div>
