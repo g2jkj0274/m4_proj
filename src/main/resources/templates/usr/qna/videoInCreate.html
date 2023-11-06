@@ -16,6 +16,7 @@
             <div>
                 <span th:if="${lectureId != null}" th:text="'Lecture ID: ' + ${lectureId}"></span>
                 <span th:unless="${lectureId != null}" th:text="'해당 id값이 없습니다.'"></span>
+                <br>
                 <span th:if="${lessonId != null}" th:text="'Lesson ID: ' + ${lessonId}"></span>
                 <span th:unless="${lessonId != null}" th:text="'해당 id값이 없습니다.'"></span>
             </div>

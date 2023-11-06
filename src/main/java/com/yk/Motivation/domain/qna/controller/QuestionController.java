@@ -46,9 +46,18 @@ public class QuestionController {
     // 질문 작성 데이터 처리
     @PostMapping("/create")
     public String handleCreate(Question question) {
+        Member loginedMember = rq.getMember();
+
+        if(loginedMember == null) {
+            return "redirect:/login";
+        }
+
+        question.setMember(loginedMember); // 로그인된 멤버 정보를 Question 객체에 설정
         questionService.create(question);  // 데이터베이스에 저장하는 로직
         return "redirect:/usr/qna/q/list"; // 질문 목록 페이지로 리디렉션
     }
+
+    /*영역 분할*/
 
     // 비디오 페이지 안의 QnA List
     @GetMapping("/videoInList/{lessonId}")
@@ -77,9 +86,15 @@ public class QuestionController {
     }
 
     @GetMapping(value = "/videoInDetail/{id}")
-    public String videoInDetail(Model model, @PathVariable("id") Integer id) {
+    public String videoInDetail(Model model, @PathVariable("id") Integer id, @RequestParam(name = "lessonId", required = false) Long lessonId) {
         Question question = this.questionService.getQuestion(id);
         model.addAttribute("question", question);
+
+        // lessonId가 제공되었다면 모델에 추가
+        if (lessonId != null) {
+            model.addAttribute("lessonId", lessonId);
+        }
+
         return "usr/qna/videoInDetail";
     }
 

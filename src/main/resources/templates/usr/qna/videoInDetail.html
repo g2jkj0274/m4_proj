@@ -57,7 +57,7 @@
 
                 <div class="mt-6"> <!-- 버튼 그룹 시작 -->
                     <div class="text-center"> <!-- 중앙 정렬 -->
-                        <a class="btn btn-link" th:href="|/usr/qna/q/videoInList|">목록</a>
+                        <a class="btn btn-link" th:href="@{/usr/qna/q/videoInList/{lessonId}(lessonId=${lessonId})}">목록</a>
                     </div>
                 </div>
 
