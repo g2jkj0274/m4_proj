@@ -91,7 +91,9 @@ public class QuestionController {
         return "redirect:/usr/qna/q/detail/" + updatedQuestion.getId();
     }
 
-    /*영역 분할*//*영역 분할*//*영역 분할*//*영역 분할*//*영역 분할*//*영역 분할*//*영역 분할*//*영역 분할*//*영역 분할*//*영역 분할*/
+    /*####################################################################################################################################*/
+    /*####################################################################################################################################*/
+    /*####################################################################################################################################*/
 
     // 비디오 페이지 안의 QnA List
     @GetMapping("/videoInList/{lessonId}")
@@ -164,5 +166,35 @@ public class QuestionController {
         // 비디오 페이지 안에서 int 값 존재 = /videoInDelete/{id}
         // 일반 Q&A에서 작성한 내 글을 지우기 위해 null 대신 0 필요
         return "redirect:/usr/qna/q/videoInList/" + (lessonId != null ? lessonId : "0");
+    }
+
+    @GetMapping("/videoInModify/{id}")
+    public String videoInModify(@PathVariable Integer id, Model model, @RequestParam(name = "lessonId", required = false) Long lessonId) {
+        Optional<Question> questionOptional = questionService.findById(id);
+        if (!questionOptional.isPresent()) {
+            return "redirect:/usr/qna/q/videoInList/" + (lessonId != null ? lessonId : "0");
+        }
+        model.addAttribute("question", questionOptional.get());
+        return "usr/qna/videoInModify";
+    }
+    @PostMapping("/videoInModify/{id}")
+    public String videoInModifyQuestion(@PathVariable Integer id,
+                                        @ModelAttribute Question question,
+                                        RedirectAttributes redirectAttributes,
+                                        @RequestParam(name = "lessonId", required = false) Long lessonId) {
+        Optional<Question> existingQuestion = questionService.findById(id);
+
+        if (!existingQuestion.isPresent()) {
+            return "usr/qna/videoInModify";
+        }
+
+        Question updatedQuestion = existingQuestion.get();
+        updatedQuestion.setSubject(question.getSubject());
+        updatedQuestion.setBody(question.getBody());
+
+        questionService.save(updatedQuestion);
+
+        redirectAttributes.addFlashAttribute("successMessage", "Question updated successfully!");
+        return "redirect:/usr/qna/q/videoInDetail/" + updatedQuestion.getId() + "?lessonId=" + (lessonId != null ? lessonId : "0");
     }
 }
