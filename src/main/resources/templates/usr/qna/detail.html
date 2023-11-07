@@ -57,8 +57,10 @@
 
                 <div class="mt-6"> <!-- 버튼 그룹 시작 -->
                     <div class="text-center"> <!-- 중앙 정렬 -->
-                        <a class="btn btn-link" th:href="|/usr/qna/q/modify/${question.id}|">수정</a>
-                        <a onclick="return confirm('정말로 삭제하시겠습니까?');"
+                        <a th:if="${@questionService.checkActorCanModify(@rq.member, question).success}"
+                           class="btn btn-link" th:href="|/usr/qna/q/modify/${question.id}|">수정</a>
+                        <a th:if="${@questionService.checkActorCanModify(@rq.member, question).success}"
+                           onclick="return confirm('정말로 삭제하시겠습니까?');"
                            class="btn btn-link" th:href="|/usr/qna/q/delete/${question.id}|">삭제</a>
                         <a class="btn btn-link" th:href="|/usr/qna/q/list|">목록</a>
                     </div>
