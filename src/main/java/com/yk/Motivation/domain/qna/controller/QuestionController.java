@@ -63,6 +63,11 @@ public class QuestionController {
         return "redirect:/usr/qna/q/list";
     }
 
+    @GetMapping("/modify/{id}")
+    public String modify(@PathVariable Integer id) {
+        return "usr/qna/modify";
+    }
+
     /*영역 분할*/
 
     // 비디오 페이지 안의 QnA List
