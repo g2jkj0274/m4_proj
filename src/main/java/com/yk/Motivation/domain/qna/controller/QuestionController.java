@@ -157,4 +157,12 @@ public class QuestionController {
         // lessonId를 URL에 포함하여 리다이렉션
         return "redirect:/usr/qna/q/videoInList/" + lessonId;
     }
+
+    @GetMapping("/videoInDelete/{id}")
+    public String videoInDelete(@PathVariable Integer id, @RequestParam(name = "lessonId", required = false) Long lessonId) {
+        questionService.delete(id);
+        // 비디오 페이지 안에서 int 값 존재 = /videoInDelete/{id}
+        // 일반 Q&A에서 작성한 내 글을 지우기 위해 null 대신 0 필요
+        return "redirect:/usr/qna/q/videoInList/" + (lessonId != null ? lessonId : "0");
+    }
 }
