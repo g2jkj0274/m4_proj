@@ -6,14 +6,20 @@ import com.yk.Motivation.domain.qna.entity.Question;
 import com.yk.Motivation.domain.qna.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
+
+    public Optional<Question> findById(Integer id) {
+        return questionRepository.findById(id);
+    }
 
     public List<Question> getList() {
         return this.questionRepository.findAll();
@@ -30,6 +36,11 @@ public class QuestionService {
 
     public void delete(Integer id) {
         questionRepository.deleteById(id);
+    }
+
+    @Transactional
+    public Question save(Question question) {
+        return questionRepository.save(question);
     }
 
     public RsData<?> checkActorCanModify(Member member, Question question) {

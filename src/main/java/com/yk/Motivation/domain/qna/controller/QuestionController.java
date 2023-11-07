@@ -11,8 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/usr/qna/q")
@@ -42,7 +44,6 @@ public class QuestionController {
     public String showCreate(Model model) {
         return "usr/qna/create";
     }
-
     // 질문 작성 데이터 처리
     @PostMapping("/create")
     public String handleCreate(Question question) {
@@ -64,11 +65,33 @@ public class QuestionController {
     }
 
     @GetMapping("/modify/{id}")
-    public String modify(@PathVariable Integer id) {
+    public String modify(@PathVariable Integer id, Model model) {
+        Optional<Question> questionOptional = questionService.findById(id);
+        if (!questionOptional.isPresent()) {
+            return "redirect:/usr/qna/q/list";
+        }
+        model.addAttribute("question", questionOptional.get());
         return "usr/qna/modify";
     }
+    @PostMapping("/modify/{id}")
+    public String modifyQuestion(@PathVariable Integer id, @ModelAttribute Question question, RedirectAttributes redirectAttributes) {
+        Optional<Question> existingQuestion = questionService.findById(id);
 
-    /*영역 분할*/
+        if (!existingQuestion.isPresent()) {
+            return "usr/qna/modify";
+        }
+
+        Question updatedQuestion = existingQuestion.get();
+        updatedQuestion.setSubject(question.getSubject());
+        updatedQuestion.setBody(question.getBody());
+
+        questionService.save(updatedQuestion);
+
+        redirectAttributes.addFlashAttribute("successMessage", "Question updated successfully!");
+        return "redirect:/usr/qna/q/detail/" + updatedQuestion.getId();
+    }
+
+    /*영역 분할*//*영역 분할*//*영역 분할*//*영역 분할*//*영역 분할*//*영역 분할*//*영역 분할*//*영역 분할*//*영역 분할*//*영역 분할*/
 
     // 비디오 페이지 안의 QnA List
     @GetMapping("/videoInList/{lessonId}")
@@ -120,7 +143,6 @@ public class QuestionController {
 
         return "usr/qna/videoInCreate";
     }
-
     @PostMapping("/videoInCreate")
     public String videoInHandleCreate(Question question, @RequestParam("lesson") long lessonId) {
         Member loginedMember = rq.getMember();
