@@ -84,6 +84,7 @@ public class QuestionController {
         Question updatedQuestion = existingQuestion.get();
         updatedQuestion.setSubject(question.getSubject());
         updatedQuestion.setBody(question.getBody());
+        updatedQuestion.setBodyHtml(question.getBodyHtml());
 
         questionService.save(updatedQuestion);
 
@@ -191,6 +192,7 @@ public class QuestionController {
         Question updatedQuestion = existingQuestion.get();
         updatedQuestion.setSubject(question.getSubject());
         updatedQuestion.setBody(question.getBody());
+        updatedQuestion.setBodyHtml(question.getBodyHtml());
 
         questionService.save(updatedQuestion);
 
