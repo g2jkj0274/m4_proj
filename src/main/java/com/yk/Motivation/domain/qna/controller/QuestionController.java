@@ -57,6 +57,12 @@ public class QuestionController {
         return "redirect:/usr/qna/q/list"; // 질문 목록 페이지로 리디렉션
     }
 
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        questionService.delete(id);
+        return "redirect:/usr/qna/q/list";
+    }
+
     /*영역 분할*/
 
     // 비디오 페이지 안의 QnA List
