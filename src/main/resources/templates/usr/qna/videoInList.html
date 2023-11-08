@@ -26,14 +26,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="question : ${questionList}">
+                        <tr th:each="question, stat : ${questionList}">
                             <td>
                                 <a th:href="@{/usr/qna/q/videoInDetail/{id}(id=${question.id},lessonId=${lessonId})}" th:text="${question.subject}"></a>
                             </td>
                             <td>
-                                <th:block th:if="${#lists.size(question.answerList) == 0}">대기중...</th:block>
-                                <th:block th:if="${#lists.size(question.answerList) > 0}">답변 완료</th:block>
-
+                                <th:block th:if="${hasAnswersByOthersList[stat.index]}">답변 완료</th:block>
+                                <th:block th:if="${!hasAnswersByOthersList[stat.index]}">대기중...</th:block>
                             </td>
                             <td>
                                 <h5 th:text="|${#lists.size(question.answerList)}개의 기록이 있습니다.|"></h5>

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/usr/qna/q")
@@ -27,8 +28,13 @@ public class QuestionController {
 
     @GetMapping("/list")
     public String list(Model model) {
+        Member currentMember = rq.getMember();
         List<Question> questionList = this.questionService.getList();
+        List<Boolean> hasAnswersByOthersList = questionList.stream()
+                .map(question -> this.questionService.hasAnswersByOthers(question, currentMember))
+                .collect(Collectors.toList());
         model.addAttribute("questionList", questionList);
+        model.addAttribute("hasAnswersByOthersList", hasAnswersByOthersList);
         return "usr/qna/list";
     }
 
@@ -99,7 +105,7 @@ public class QuestionController {
     // 비디오 페이지 안의 QnA List
     @GetMapping("/videoInList/{lessonId}")
     public String videoInListWithLectureAndLesson(Model model, @PathVariable long lessonId) {
-        // 레슨 ID를 사용하여 레슨 정보를 가져옵니다.
+        Member currentMember = rq.getMember();
         Lesson lesson = lessonService.findById(lessonId).orElse(null);
 
         if (lesson != null) {
@@ -110,14 +116,15 @@ public class QuestionController {
             // 모델에 강의 ID와 레슨 ID를 추가합니다.
             model.addAttribute("lectureId", lectureId);
             model.addAttribute("lessonId", lessonId);
-        } else {
-            // 적절한 오류 처리
-            // 예를 들어, 에러 메시지를 추가하거나 오류 페이지로 리디렉션
         }
 
-        // QnA 리스트를 가져옵니다.
         List<Question> questionList = questionService.getList();
+        List<Boolean> hasAnswersByOthersList = questionList.stream()
+                .map(question -> this.questionService.hasAnswersByOthers(question, currentMember))
+                .collect(Collectors.toList());
+
         model.addAttribute("questionList", questionList);
+        model.addAttribute("hasAnswersByOthersList", hasAnswersByOthersList);
 
         return "usr/qna/videoInList";
     }

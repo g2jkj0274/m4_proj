@@ -25,6 +25,13 @@ public class QuestionService {
         return this.questionRepository.findAll();
     }
 
+    public boolean hasAnswersByOthers(Question question, Member currentMember) {
+        return question.getAnswerList().stream()
+                .anyMatch(answer -> answer.getMember().getGrantedAuthorities()
+                        .stream()
+                        .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("admin")));
+    }
+
     public Question getQuestion(Integer id) {
         return this.questionRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Question with id " + id + " not found"));
