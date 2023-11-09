@@ -196,7 +196,9 @@ public class ArticleController {
     public String showDetail(
             Model model,
             @PathVariable String boardCode,
-            @PathVariable long id
+            @PathVariable long id,
+            @RequestParam(defaultValue = "0") int page, // 페이지 번호 (0부터 시작)
+            @RequestParam(defaultValue = "3") int size // 페이지 당 댓글 수
     ) {
         Board board = boardService.findByCode(boardCode).get();
         Article article = articleService.findById(id).get();
@@ -205,15 +207,16 @@ public class ArticleController {
         article.setViewCount(article.getViewCount() + 1);
         articleService.save(article); // 증가된 조회수를 저장
 
-        // 댓글 리스트 가져오기
-        List<Comment> comments = commentService.findByArticleId(id);
+        // 페이징 처리된 댓글 리스트 가져오기
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Comment> commentsPage = commentService.findByArticleIdWithPagination(id, pageable);
 
         Map<String, GenFile> filesMap = articleService.findGenFilesMapKeyByFileNo(article, "common", "attachment");
 
         model.addAttribute("board", board);
         model.addAttribute("article", article);
         model.addAttribute("filesMap", filesMap);
-        model.addAttribute("comments", comments); // 댓글 리스트를 모델에 추가
+        model.addAttribute("commentsPage", commentsPage); // 페이징 처리된 댓글 페이지를 모델에 추가
 
         return "usr/article/detail";
     }

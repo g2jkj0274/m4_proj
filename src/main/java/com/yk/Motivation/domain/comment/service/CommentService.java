@@ -3,6 +3,8 @@ package com.yk.Motivation.domain.comment.service;
 import com.yk.Motivation.domain.comment.entity.Comment;
 import com.yk.Motivation.domain.comment.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +20,11 @@ public class CommentService {
 
     public List<Comment> findByArticleId(long id) {
         return commentRepository.findByArticleId(id);
+    }
+
+    // 페이징 처리를 위한 메소드
+    public Page<Comment> findByArticleIdWithPagination(long articleId, Pageable pageable) {
+        return commentRepository.findByArticleId(articleId, pageable);
     }
 
     // 댓글 삭제

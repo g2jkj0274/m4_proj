@@ -149,8 +149,8 @@
 
                 <!-- 댓글 리스트 -->
                 <span>댓글 리스트</span>
-                <ul th:each="comment : ${comments}">
-                    <li>
+                <ul th:each="comment : ${commentsPage.content}"> <!-- 페이징 처리된 댓글 목록 사용 -->
+                    <li style="border: 1px solid black; padding: 2px;">
                         <strong th:text="${comment.nickName}"></strong> <!-- 작성자의 nickName 출력 -->
                         <p id="comment-content-${comment.id}" th:text="${comment.content}"></p>
                         <div class="rating">
@@ -207,6 +207,21 @@
                         </div>
                     </li>
                 </ul>
+                <!-- 페이지네이션 -->
+                <div>
+                    <ul class="pagination">
+                        <li th:if="${commentsPage.hasPrevious()}">
+                            <a th:href="@{'/usr/article/' + ${boardCode} + '/detail/' + ${article.id}(page=${commentsPage.number - 1}, size=${commentsPage.size})}">&laquo;</a>
+                        </li>
+                        <li th:each="pageNum : ${#numbers.sequence(0, commentsPage.totalPages - 1)}"
+                            th:classappend="${pageNum == commentsPage.number} ? 'active'">
+                            <a th:href="@{'/usr/article/' + ${boardCode} + '/detail/' + ${article.id}(page=${pageNum}, size=${commentsPage.size})}" th:text="${pageNum + 1}"></a>
+                        </li>
+                        <li th:if="${commentsPage.hasNext()}">
+                            <a th:href="@{'/usr/article/' + ${boardCode} + '/detail/' + ${article.id}(page=${commentsPage.number + 1}, size=${commentsPage.size})}">&raquo;</a>
+                        </li>
+                    </ul>
+                </div>
 
                 <!-- 댓글 작성 폼 -->
                 <div class="form-control col-span-full">
