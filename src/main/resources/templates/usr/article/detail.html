@@ -152,7 +152,6 @@
                 <ul th:each="comment : ${commentsPage.content}"> <!-- 페이징 처리된 댓글 목록 사용 -->
                     <li style="border: 1px solid black; padding: 2px;">
                         <strong th:text="${comment.nickName}"></strong> <!-- 작성자의 nickName 출력 -->
-                        <p id="comment-content-${comment.id}" th:text="${comment.content}"></p>
                         <div class="rating">
                             <input type="radio" disabled="true" th:checked="${comment.rating == 5}">
                             <label>★</label>
@@ -165,6 +164,7 @@
                             <input type="radio" disabled="true" th:checked="${comment.rating == 1}">
                             <label>★</label>
                         </div>
+                        <p id="comment-content-${comment.id}" th:text="${comment.content}"></p>
                         <!-- 로그인된 사용자가 이 댓글의 작성자인 경우 수정 및 삭제 버튼 표시 -->
                         <div th:if="${@rq.login}">
                             <div th:if="${@rq.member.nickname} == ${comment.nickName}">
@@ -208,7 +208,7 @@
                     </li>
                 </ul>
                 <!-- 페이지네이션 -->
-                <div>
+                <!--<div>
                     <ul class="pagination">
                         <li th:if="${commentsPage.hasPrevious()}">
                             <a th:href="@{'/usr/article/' + ${boardCode} + '/detail/' + ${article.id}(page=${commentsPage.number - 1}, size=${commentsPage.size})}">&laquo;</a>
@@ -221,6 +221,10 @@
                             <a th:href="@{'/usr/article/' + ${boardCode} + '/detail/' + ${article.id}(page=${commentsPage.number + 1}, size=${commentsPage.size})}">&raquo;</a>
                         </li>
                     </ul>
+                </div>-->
+                <div class="mt-4" th:if="${commentsPage.totalPages > 1}"
+                     th:with="queryStrBase='/usr/article/' + ${boardCode} + '/detail/' + ${article.id} + '?'">
+                    <div th:replace="common/fragments :: pagination(${commentsPage}, ${queryStrBase}, 1)"></div>
                 </div>
 
                 <!-- 댓글 작성 폼 -->

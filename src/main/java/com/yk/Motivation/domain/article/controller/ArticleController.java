@@ -197,7 +197,7 @@ public class ArticleController {
             Model model,
             @PathVariable String boardCode,
             @PathVariable long id,
-            @RequestParam(defaultValue = "0") int page, // 페이지 번호 (0부터 시작)
+            @RequestParam(defaultValue = "1") int page, // 페이지 번호 (0부터 시작)
             @RequestParam(defaultValue = "3") int size // 페이지 당 댓글 수
     ) {
         Board board = boardService.findByCode(boardCode).get();
@@ -208,7 +208,13 @@ public class ArticleController {
         articleService.save(article); // 증가된 조회수를 저장
 
         // 페이징 처리된 댓글 리스트 가져오기
-        Pageable pageable = PageRequest.of(page, size);
+        // Pageable pageable = PageRequest.of(page, size);
+        // Page<Comment> commentsPage = commentService.findByArticleIdWithPagination(id, pageable);
+
+        // 페이지 번호 조정 (1부터 시작하는 번호를 0부터 시작하는 번호로 변환)
+        int pageAdjusted = page - 1;
+
+        Pageable pageable = PageRequest.of(pageAdjusted, size);
         Page<Comment> commentsPage = commentService.findByArticleIdWithPagination(id, pageable);
 
         Map<String, GenFile> filesMap = articleService.findGenFilesMapKeyByFileNo(article, "common", "attachment");
