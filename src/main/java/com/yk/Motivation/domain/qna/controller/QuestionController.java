@@ -8,6 +8,9 @@ import com.yk.Motivation.domain.member.entity.Member;
 import com.yk.Motivation.domain.qna.entity.Question;
 import com.yk.Motivation.domain.qna.service.QuestionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,13 +30,14 @@ public class QuestionController {
     private final LessonService lessonService;
 
     @GetMapping("/list")
-    public String list(Model model) {
+    public String list(Model model, @PageableDefault(size = 2) Pageable pageable) {
         Member currentMember = rq.getMember();
-        List<Question> questionList = this.questionService.getList();
-        List<Boolean> hasAnswersByOthersList = questionList.stream()
+        Page<Question> questionPage = this.questionService.getList(pageable);
+        List<Boolean> hasAnswersByOthersList = questionPage.getContent().stream()
                 .map(question -> this.questionService.hasAnswersByOthers(question, currentMember))
                 .collect(Collectors.toList());
-        model.addAttribute("questionList", questionList);
+
+        model.addAttribute("questionPage", questionPage);
         model.addAttribute("hasAnswersByOthersList", hasAnswersByOthersList);
         return "usr/qna/list";
     }
