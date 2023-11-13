@@ -19,7 +19,7 @@ public class QuestionService {
 
     private final QuestionRepository questionRepository;
 
-    public Optional<Question> findById(Integer id) {
+    public Optional<Question> findById(Long id) {
         return questionRepository.findById(id);
     }
 
@@ -38,7 +38,7 @@ public class QuestionService {
                         .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("admin")));
     }
 
-    public Question getQuestion(Integer id) {
+    public Question getQuestion(Long id) {
         return this.questionRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Question with id " + id + " not found"));
     }
@@ -47,7 +47,7 @@ public class QuestionService {
         return this.questionRepository.save(question);
     }
 
-    public void delete(Integer id) {
+    public void delete(Long id) {
         questionRepository.deleteById(id);
     }
 

@@ -25,7 +25,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="question, stat : ${questionPage.content}">
+                        <tr th:each="question, stat : ${questionList}">
                             <td>
                                 <a th:href="@{|/usr/qna/q/detail/${question.id}|}" th:text="${question.subject}"></a>
                             </td>
@@ -39,14 +39,6 @@
                         </tr>
                         </tbody>
                     </table>
-                </div>
-                <!-- Page Navigation -->
-                <div class="pagination">
-                    <ul>
-                        <li th:each="i : ${#numbers.sequence(0, questionPage.totalPages - 1)}">
-                            <a th:href="@{/usr/qna/q/list(page=${i})}" th:text="${i + 1}"></a>
-                        </li>
-                    </ul>
                 </div>
 
                 <div th:if="${@rq.login}">

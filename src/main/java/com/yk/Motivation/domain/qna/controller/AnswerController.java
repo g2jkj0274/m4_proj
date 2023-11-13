@@ -24,7 +24,7 @@ public class AnswerController {
     private final Rq rq;
 
     @PostMapping("/create/{id}")
-    public String createAnswer(Model model, @PathVariable("id") Integer id, @RequestParam String content) {
+    public String createAnswer(Model model, @PathVariable("id") Long id, @RequestParam String content) {
         Member loginedMember = rq.getMember();
 
         Question question = this.questionService.getQuestion(id);
@@ -43,7 +43,7 @@ public class AnswerController {
 
     // video in qna comment create
     @PostMapping("/videoInCreateAnswer/{id}")
-    public String videoInCreateAnswer(Model model, @PathVariable("id") Integer id, @RequestParam String content, @RequestParam(name = "lessonId", required = false) Long lessonId) {
+    public String videoInCreateAnswer(Model model, @PathVariable("id") Long id, @RequestParam String content, @RequestParam(name = "lessonId", required = false) Long lessonId) {
         Member loginedMember = rq.getMember();
 
         Question question = this.questionService.getQuestion(id);

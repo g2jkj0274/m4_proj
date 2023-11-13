@@ -8,9 +8,6 @@ import com.yk.Motivation.domain.member.entity.Member;
 import com.yk.Motivation.domain.qna.entity.Question;
 import com.yk.Motivation.domain.qna.service.QuestionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,20 +27,19 @@ public class QuestionController {
     private final LessonService lessonService;
 
     @GetMapping("/list")
-    public String list(Model model, @PageableDefault(size = 2) Pageable pageable) {
+    public String list(Model model) {
         Member currentMember = rq.getMember();
-        Page<Question> questionPage = this.questionService.getList(pageable);
-        List<Boolean> hasAnswersByOthersList = questionPage.getContent().stream()
+        List<Question> questionList = this.questionService.getList();
+        List<Boolean> hasAnswersByOthersList = questionList.stream()
                 .map(question -> this.questionService.hasAnswersByOthers(question, currentMember))
                 .collect(Collectors.toList());
-
-        model.addAttribute("questionPage", questionPage);
+        model.addAttribute("questionList", questionList);
         model.addAttribute("hasAnswersByOthersList", hasAnswersByOthersList);
         return "usr/qna/list";
     }
 
     @GetMapping(value = "/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Integer id) {
+    public String detail(Model model, @PathVariable("id") Long id) {
         Question question = this.questionService.getQuestion(id);
         model.addAttribute("question", question);
         return "usr/qna/detail";
@@ -69,13 +65,13 @@ public class QuestionController {
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Integer id) {
+    public String delete(@PathVariable Long id) {
         questionService.delete(id);
         return "redirect:/usr/qna/q/list";
     }
 
     @GetMapping("/modify/{id}")
-    public String modify(@PathVariable Integer id, Model model) {
+    public String modify(@PathVariable Long id, Model model) {
         Optional<Question> questionOptional = questionService.findById(id);
         if (!questionOptional.isPresent()) {
             return "redirect:/usr/qna/q/list";
@@ -84,7 +80,7 @@ public class QuestionController {
         return "usr/qna/modify";
     }
     @PostMapping("/modify/{id}")
-    public String modifyQuestion(@PathVariable Integer id, @ModelAttribute Question question, RedirectAttributes redirectAttributes) {
+    public String modifyQuestion(@PathVariable Long id, @ModelAttribute Question question, RedirectAttributes redirectAttributes) {
         Optional<Question> existingQuestion = questionService.findById(id);
 
         if (!existingQuestion.isPresent()) {
@@ -134,7 +130,7 @@ public class QuestionController {
     }
 
     @GetMapping(value = "/videoInDetail/{id}")
-    public String videoInDetail(Model model, @PathVariable("id") Integer id, @RequestParam(name = "lessonId", required = false) Long lessonId) {
+    public String videoInDetail(Model model, @PathVariable("id") Long id, @RequestParam(name = "lessonId", required = false) Long lessonId) {
         Question question = this.questionService.getQuestion(id);
         model.addAttribute("question", question);
 
@@ -173,7 +169,7 @@ public class QuestionController {
     }
 
     @GetMapping("/videoInDelete/{id}")
-    public String videoInDelete(@PathVariable Integer id, @RequestParam(name = "lessonId", required = false) Long lessonId) {
+    public String videoInDelete(@PathVariable Long id, @RequestParam(name = "lessonId", required = false) Long lessonId) {
         questionService.delete(id);
         // 비디오 페이지 안에서 int 값 존재 = /videoInDelete/{id}
         // 일반 Q&A에서 작성한 내 글을 지우기 위해 null 대신 0 필요
@@ -181,7 +177,7 @@ public class QuestionController {
     }
 
     @GetMapping("/videoInModify/{id}")
-    public String videoInModify(@PathVariable Integer id, Model model, @RequestParam(name = "lessonId", required = false) Long lessonId) {
+    public String videoInModify(@PathVariable Long id, Model model, @RequestParam(name = "lessonId", required = false) Long lessonId) {
         Optional<Question> questionOptional = questionService.findById(id);
         if (!questionOptional.isPresent()) {
             return "redirect:/usr/qna/q/videoInList/" + (lessonId != null ? lessonId : "0");
@@ -190,7 +186,7 @@ public class QuestionController {
         return "usr/qna/videoInModify";
     }
     @PostMapping("/videoInModify/{id}")
-    public String videoInModifyQuestion(@PathVariable Integer id,
+    public String videoInModifyQuestion(@PathVariable Long id,
                                         @ModelAttribute Question question,
                                         RedirectAttributes redirectAttributes,
                                         @RequestParam(name = "lessonId", required = false) Long lessonId) {
