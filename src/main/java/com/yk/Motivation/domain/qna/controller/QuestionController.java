@@ -30,7 +30,7 @@ public class QuestionController {
     private final LessonService lessonService;
 
     @GetMapping("/list")
-    public String list(Model model, @PageableDefault(size = 4) Pageable pageable) {
+    public String list(Model model, @PageableDefault(size = 10) Pageable pageable) {
         Member currentMember = rq.getMember();
         Page<Question> questionPage = this.questionService.getList(pageable);
         List<Boolean> hasAnswersByOthersList = questionPage.getContent().stream()
