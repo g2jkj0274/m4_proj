@@ -19,6 +19,7 @@
                     <table>
                         <thead>
                         <tr>
+                            <th style="text-align: left">ID</th>
                             <th style="text-align: left">제목</th>
                             <th style="text-align: left">상태</th>
                             <th style="text-align: left">기록</th>
@@ -26,6 +27,9 @@
                         </thead>
                         <tbody>
                         <tr th:each="question, stat : ${questionPage.content}">
+                            <td>
+                                <span th:text="${question.id}"></span>
+                            </td>
                             <td>
                                 <a th:href="@{|/usr/qna/q/detail/${question.id}|}" th:text="${question.subject}"></a>
                             </td>
@@ -42,7 +46,7 @@
                 </div>
 
                 <script>
-                    let currentPage = 0;
+                    let currentPage = 1; // 0에서 1로 변경
                     let isFetching = false;
 
                     window.onscroll = function() {
