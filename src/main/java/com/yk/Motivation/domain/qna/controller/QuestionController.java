@@ -51,7 +51,7 @@ public class QuestionController {
 
     // 질문 작성 페이지 뷰
     @GetMapping("/create")
-    public String showCreate(Model model) {
+    public String create(Model model) {
         return "usr/qna/create";
     }
     // 질문 작성 데이터 처리
@@ -108,21 +108,20 @@ public class QuestionController {
 
     // 비디오 페이지 안의 QnA List
     @GetMapping("/videoInList/{lessonId}")
-    public String videoInListWithLectureAndLesson(Model model, @PathVariable long lessonId, @PageableDefault(size = 10) Pageable pageable) {
+    public String videoInList(Model model, @PathVariable long lessonId, @PageableDefault(size = 10) Pageable pageable) {
         Member currentMember = rq.getMember();
         Lesson lesson = lessonService.findById(lessonId).orElse(null);
 
-        if (lesson != null) {
-            // 레슨에서 강의 정보를 가져옵니다.
-            Lecture lecture = lesson.getLecture();
-            long lectureId = lecture.getId();
+        // 레슨에서 강의 정보를 가져옵니다.
+        Lecture lecture = lesson.getLecture();
+        long lectureId = lecture.getId();
 
-            // 모델에 강의 ID와 레슨 ID를 추가합니다.
-            model.addAttribute("lectureId", lectureId);
-            model.addAttribute("lessonId", lessonId);
-        }
+        // 모델에 강의 ID와 레슨 ID를 추가합니다.
+        model.addAttribute("lectureId", lectureId);
+        model.addAttribute("lessonId", lessonId);
 
-        Page<Question> questionPage = this.questionService.getList(pageable);
+        Page<Question> questionPage = this.questionService.getListWithPriority(lectureId, lessonId, pageable);
+
         List<Boolean> hasAnswersByOthersList = questionPage.getContent().stream()
                 .map(question -> this.questionService.hasAnswersByOthers(question, currentMember))
                 .collect(Collectors.toList());

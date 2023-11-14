@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -23,12 +22,12 @@ public class QuestionService {
         return questionRepository.findById(id);
     }
 
-    public List<Question> getList() {
-        return this.questionRepository.findAll();
-    }
-
     public Page<Question> getList(Pageable pageable) {
         return this.questionRepository.findAll(pageable);
+    }
+
+    public Page<Question> getListWithPriority(long lectureId, long lessonId, Pageable pageable) {
+        return this.questionRepository.findWithPriority(lectureId, lessonId, pageable);
     }
 
     public boolean hasAnswersByOthers(Question question, Member currentMember) {
@@ -62,9 +61,5 @@ public class QuestionService {
         }
 
         return new RsData<>("S-1", "가능합니다.", null);
-    }
-
-    public RsData<?> checkActorCanRemove(Member member, Question question) {
-        return checkActorCanModify(member, question);
     }
 }
