@@ -108,7 +108,7 @@ public class QuestionController {
 
     // 비디오 페이지 안의 QnA List
     @GetMapping("/videoInList/{lessonId}")
-    public String videoInListWithLectureAndLesson(Model model, @PathVariable long lessonId) {
+    public String videoInListWithLectureAndLesson(Model model, @PathVariable long lessonId, @PageableDefault(size = 10) Pageable pageable) {
         Member currentMember = rq.getMember();
         Lesson lesson = lessonService.findById(lessonId).orElse(null);
 
@@ -122,12 +122,12 @@ public class QuestionController {
             model.addAttribute("lessonId", lessonId);
         }
 
-        List<Question> questionList = questionService.getList();
-        List<Boolean> hasAnswersByOthersList = questionList.stream()
+        Page<Question> questionPage = this.questionService.getList(pageable);
+        List<Boolean> hasAnswersByOthersList = questionPage.getContent().stream()
                 .map(question -> this.questionService.hasAnswersByOthers(question, currentMember))
                 .collect(Collectors.toList());
 
-        model.addAttribute("questionList", questionList);
+        model.addAttribute("questionPage", questionPage);
         model.addAttribute("hasAnswersByOthersList", hasAnswersByOthersList);
 
         return "usr/qna/videoInList";

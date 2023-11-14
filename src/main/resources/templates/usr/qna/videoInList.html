@@ -16,7 +16,6 @@
         <div class="card bg-base-100 shadow-xl">
             <div class="card-body">
                 <div class="detail grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-3">
-
                     <table>
                         <thead>
                         <tr>
@@ -26,7 +25,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="question, stat : ${questionList}">
+                        <tr th:each="question, stat : ${questionPage.content}">
                             <td>
                                 <a th:href="@{/usr/qna/q/videoInDetail/{id}(id=${question.id},lessonId=${lessonId})}" th:text="${question.subject}"></a>
                             </td>
@@ -40,8 +39,34 @@
                         </tr>
                         </tbody>
                     </table>
-
                 </div>
+
+                <script>
+                    let currentPage = 0;
+                    let isFetching = false;
+
+                    window.onscroll = function() {
+                        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 10 && !isFetching) {
+                            isFetching = true;
+                            loadMoreData();
+                        }
+                    };
+
+                    function loadMoreData() {
+                        fetch(`/usr/qna/q/list?page=${currentPage}`)
+                            .then(response => response.text())
+                            .then(html => {
+                                const parser = new DOMParser();
+                                const doc = parser.parseFromString(html, "text/html");
+                                const rows = doc.querySelectorAll("table tbody tr");
+                                const table = document.querySelector("table tbody");
+                                rows.forEach(row => table.appendChild(row));
+                                currentPage++;
+                                isFetching = false;
+                            })
+                            .catch(error => console.error('Error:', error));
+                    }
+                </script>
 
                 <div th:if="${@rq.login}">
                     <!-- lectureId와 lessonId를 쿼리 파라미터로 추가 -->
