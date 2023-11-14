@@ -26,8 +26,8 @@ public class QuestionService {
         return this.questionRepository.findAll(pageable);
     }
 
-    public Page<Question> getListWithPriority(long lectureId, long lessonId, Pageable pageable) {
-        return this.questionRepository.findWithPriority(lectureId, lessonId, pageable);
+    public Page<Question> getListWithPriority(long lectureId, long lessonId, Member currentMember, Pageable pageable) {
+        return questionRepository.findWithPriority(lectureId, lessonId, currentMember.getId(), pageable);
     }
 
     public boolean hasAnswersByOthers(Question question, Member currentMember) {

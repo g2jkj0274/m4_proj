@@ -120,7 +120,7 @@ public class QuestionController {
         model.addAttribute("lectureId", lectureId);
         model.addAttribute("lessonId", lessonId);
 
-        Page<Question> questionPage = this.questionService.getListWithPriority(lectureId, lessonId, pageable);
+        Page<Question> questionPage = this.questionService.getListWithPriority(lectureId, lessonId, currentMember, pageable);
 
         List<Boolean> hasAnswersByOthersList = questionPage.getContent().stream()
                 .map(question -> this.questionService.hasAnswersByOthers(question, currentMember))
