@@ -1,0 +1,37 @@
+<html layout:decorate="~{usr/common/layout}">
+
+<head>
+    <title th:text="게시판"></title>
+</head>
+
+<body>
+
+<div class="flex-1 flex items-center justify-center" layout:fragment="content">
+    <form action="" method="post">
+        <div class="p-4 mb-48 max-w-2xl">
+            <h1 class="text-xl text-center py-6 sm:text-2xl">비밀번호 확인</h1>
+            <div class="pw_box">
+                <input class=" mt-2 rounded-lg bg-gray-100 p-2 focus:outline-[#312F95] w-full placeholder:text-sm placeholder:text-[#312F95]" maxlength="30" type="text" name="password" placeholder="비밀번호">
+            </div>
+            <div class="login_btn">
+                <button class="bg-[#312F95] w-full p-2 mt-6 rounded-lg hover:bg-[#112862]">
+                    <span class="text-white ">비밀번호 확인</span>
+                </button>
+            </div>
+            <div class="text_center p-4">
+                <a class="mx-2 text-sm hover:text-[#312F95] hidden sm:inline" href="#">가입하기</a>
+                <span class="hidden sm:inline sm:mr-2">|</span>
+                <a class="ml-8 sm:-ml-1 text-sm hover:text-[#312F95]" href="#">아이디 찾기</a>
+                <span>|</span>
+                <a class="mx-2 text-sm hover:text-[#312F95]" href="#">로그인</a>
+            </div>
+            <div class="text_bottom text-center ">
+                <a class="mx-auto bg-[#355DC2] text-white rounded-2xl p-2 px-2 mx-4 text-sm hover:bg-[#112862] sm:hidden sm:w-1/4" href="/usr/member/join">회원가입</a>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+</body>
+</html>

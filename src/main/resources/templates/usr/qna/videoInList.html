@@ -2,6 +2,11 @@
 
 <head>
     <title th:text="|QnA 게시판|"></title>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        let lessonId = [[${lessonId}]];
+        /*]]>*/
+    </script>
 </head>
 
 <body>
@@ -57,7 +62,7 @@
                     };
 
                     function loadMoreData() {
-                        fetch(`/usr/qna/q/list?page=${currentPage}`)
+                        fetch(`/usr/qna/q/videoInList/${lessonId}?page=${currentPage}`)
                             .then(response => response.text())
                             .then(html => {
                                 const parser = new DOMParser();
