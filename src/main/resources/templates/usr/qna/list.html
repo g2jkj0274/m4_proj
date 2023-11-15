@@ -19,7 +19,6 @@
                     <table>
                         <thead>
                         <tr>
-                            <th style="text-align: left">ID</th>
                             <th style="text-align: left">제목</th>
                             <th style="text-align: left">상태</th>
                             <th style="text-align: left">기록</th>
@@ -27,9 +26,6 @@
                         </thead>
                         <tbody>
                         <tr th:each="question, stat : ${questionPage.content}">
-                            <td>
-                                <span th:text="${question.id}"></span>
-                            </td>
                             <td>
                                 <a th:href="@{|/usr/qna/q/detail/${question.id}|}" th:text="${question.subject}"></a>
                             </td>
@@ -44,42 +40,14 @@
                         </tbody>
                     </table>
                 </div>
-
-                <script>
-                    let currentPage = 1; // 0에서 1로 변경
-                    let isFetching = false;
-
-                    window.onscroll = function() {
-                        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 10 && !isFetching) {
-                            isFetching = true;
-                            loadMoreData();
-                        }
-                    };
-
-                    function loadMoreData() {
-                        fetch(`/usr/qna/q/list?page=${currentPage}`)
-                            .then(response => response.text())
-                            .then(html => {
-                                const parser = new DOMParser();
-                                const doc = parser.parseFromString(html, "text/html");
-                                const rows = doc.querySelectorAll("table tbody tr");
-                                const table = document.querySelector("table tbody");
-                                rows.forEach(row => table.appendChild(row));
-                                currentPage++;
-                                isFetching = false;
-                            })
-                            .catch(error => console.error('Error:', error));
-                    }
-                </script>
-
                 <!-- Page Navigation -->
-                <!--<div class="pagination">
+                <div class="pagination">
                     <ul>
                         <li th:each="i : ${#numbers.sequence(0, questionPage.totalPages - 1)}">
                             <a th:href="@{/usr/qna/q/list(page=${i})}" th:text="${i + 1}"></a>
                         </li>
                     </ul>
-                </div>-->
+                </div>
 
                 <div th:if="${@rq.login}">
                     <a th:href="@{/usr/qna/q/create}" class="btn btn-primary">질문 등록하기</a>
