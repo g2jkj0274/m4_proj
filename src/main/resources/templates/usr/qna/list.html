@@ -41,12 +41,9 @@
                     </table>
                 </div>
                 <!-- Page Navigation -->
-                <div class="pagination">
-                    <ul>
-                        <li th:each="i : ${#numbers.sequence(0, questionPage.totalPages - 1)}">
-                            <a th:href="@{/usr/qna/q/list(page=${i})}" th:text="${i + 1}"></a>
-                        </li>
-                    </ul>
+                <div class="mt-4" th:if="${questionPage.totalPages > 1}"
+                     th:with="queryStrBase='/usr/qna/q/list?'">
+                    <div th:replace="common/fragments :: pagination(${questionPage}, ${queryStrBase}, 1)"></div>
                 </div>
 
                 <div th:if="${@rq.login}">

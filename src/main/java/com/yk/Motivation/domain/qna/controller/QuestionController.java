@@ -9,6 +9,7 @@ import com.yk.Motivation.domain.qna.entity.Question;
 import com.yk.Motivation.domain.qna.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -30,9 +31,15 @@ public class QuestionController {
     private final LessonService lessonService;
 
     @GetMapping("/list")
-    public String list(Model model, @PageableDefault(size = 10) Pageable pageable) {
+    public String list(Model model, @RequestParam(defaultValue = "1") int page, @PageableDefault(size = 10) Pageable pageable) {
+        // 페이지 번호를 0 기반 인덱스로 변환 (1 페이지 -> 0, 2 페이지 -> 1, ...)
+        int zeroBasedPage = Math.max(0, page - 1);
+
+        // PageRequest 객체 생성 (zeroBasedPage를 사용)
+        Pageable adjustedPageable = PageRequest.of(zeroBasedPage, pageable.getPageSize(), pageable.getSort());
+
         Member currentMember = rq.getMember();
-        Page<Question> questionPage = this.questionService.getList(pageable);
+        Page<Question> questionPage = this.questionService.getList(adjustedPageable);
         List<Boolean> hasAnswersByOthersList = questionPage.getContent().stream()
                 .map(question -> this.questionService.hasAnswersByOthers(question, currentMember))
                 .collect(Collectors.toList());
